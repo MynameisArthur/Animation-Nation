@@ -1,0 +1,184 @@
+$primary: #43cc2b
+
+@mixin bg-mix
+    background-size: cover
+    background-repeat: no-repeat
+
+*,*::before,*::after
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+body, html  
+  width: 100%
+  height: 100%
+  font-family: Courier New, Courier, monospace
+
+.wrapper
+    width: 100%
+    height: 100%      
+    position: relative
+    overflow: hidden
+.btn  
+    position: absolute
+    z-index: 10
+    top: 50%
+    left: 50%
+    transform: translate(-50%,-50%)
+    border-radius: 50%
+    color: #ededed
+    background-color: $primary
+    box-shadow: 2px 0 0 transparent,-2px 0 0 transparent, 0 2px 0 transparent, 0 -2px 0 transparent
+    cursor: pointer
+    width: 4em
+    height: 4em
+    font-size: 3rem
+    border: none
+    outline: none
+    display: flex
+    justify-content: center
+    align-items: center  
+    &:active
+        transform: translate(-50%, -50%) scale(0.98) 
+
+.animation-btn
+    @extend .btn  
+
+.toggle-animation
+    display: none     
+    &:checked        
+        & ~ .animation-btn
+            animation: change-colors 0.8s ease 0.8s forwards,exit 0.8s ease-in 1.6s forwards
+        & ~ .wall, & ~ .bottom-wall, & ~ .land, & ~ .land::before, & ~ .moon, & ~ .restart
+            animation-play-state: running
+        & ~ .square            
+            animation-play-state: running
+            span                
+                animation-play-state: running
+                
+.square
+    position: relative
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)    
+    width: 1px
+    height: 1px
+    z-index: -1    
+    animation: grow 1s forwards
+    animation-play-state: paused
+    span
+        background: #232323
+        position: absolute
+        display: block
+        width: 30px
+        height: 30px
+        border-radius: 50%
+        animation: inflate 1s forwards            
+        animation-play-state: paused
+        &:nth-child(1)
+            top: 0
+            left: 0
+            transform: translate(-50%,-50%)    
+            animation-delay: 0.65s        
+        &:nth-child(2)
+            top: 0
+            right: 0
+            transform: translate(50%,-50%)            
+            animation-delay: 0.7s
+        &:nth-child(3)
+            bottom: 0
+            left: 0
+            transform: translate(-50%,50%)            
+            animation-delay: 0.75s
+        &:nth-child(4)
+            bottom: 0
+            right: 0
+            transform: translate(50%,50%)
+            animation-delay: 0.8s    
+.moon
+    position: absolute
+    right: 1%
+    top: 50%
+    z-index: 1
+    width: 180px
+    height: 180px
+    opacity: 0
+    background: url(moon.png)
+    +bg-mix
+    animation: moon-rise 0.85s ease forwards 2.6s paused,moon-exit 1.2s ease forwards 4.5s paused
+    border-radius: 50%
+    box-shadow: 6px 6px 150px rgba(#ededed,0.3), -6px -6px 150px rgba(#ededed,0.3) ,0 -6px 150px rgba(#ededed,0.3), -6px 0 150px rgba(#ededed,0.3)
+
+ 
+.land
+    position: absolute
+    left: 0
+    bottom: 0
+    z-index: 2
+    width: 100%
+    height: 100%
+    background: url(land.png) 
+    +bg-mix
+    opacity: 0
+    animation: landscape-enter 0.85s ease forwards 2.6s paused, landscape-exit 1.2s ease forwards 4.5s paused
+    &::before
+        position: absolute
+        z-index: 3
+        top: 0
+        left: 0        
+        content: ''
+        width: 100%
+        height: 100%
+        transform-origin: bottom
+        background: linear-gradient(to bottom, transparent, #232323)
+        animation: remove-screen 0.65s ease-in forwards 2.35s paused
+.restart
+    @extend .btn 
+    font-size: 2em       
+    width: 5em
+    height: 5em
+    text-decoration: none    
+    top: -100%
+    animation: enter-reset 0.5s ease-in forwards 5.3s paused 
+
+@keyframes grow
+    to
+        width: 100%
+        height: 100%
+
+@keyframes inflate
+    to
+        width: 3000px
+        height: 3000px
+
+@keyframes change-colors
+    to
+        background-color: transparent
+        box-shadow: 2px 0 0 #ededed,-2px 0 0 #ededed, 0 2px 0 #ededed, 0 -2px 0 #ededed
+@keyframes exit
+    0%
+        top: 50%
+    15%,65%    
+        top: 35%
+    100%
+        top: 200%
+@keyframes landscape-enter
+    to
+        opacity: 1
+@keyframes remove-screen
+    to
+       transform: scaleY(0)
+@keyframes moon-rise
+    to 
+        opacity: 1
+        top: 10%
+@keyframes landscape-exit
+    to
+        transform: scale(1.7) translateY(100vh)
+@keyframes moon-exit
+    to
+        transform: scale(1.7) translateY(-100vh)
+
+@keyframes enter-reset
+    to
+       top: 50%
+        

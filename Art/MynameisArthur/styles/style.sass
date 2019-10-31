@@ -1,0 +1,84 @@
+$primary: #343434
+
+*,*::before,*::after
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+body, html  
+  width: 100%
+  height: 100%
+  font-family: sans-serif
+  display: flex
+  justify-content: center
+  align-items: center
+  overflow: hidden
+  
+.container
+    width: 100%
+    height: 100% 
+    overflow: hidden
+    display: flex
+    justify-content: center
+    align-items: center
+    position: relative
+    img
+       position: absolute
+       width: 100%
+       height: 100% 
+       animation: show-image 1.5s ease forwards 1.8s
+       opacity: 0       
+    h3
+        font-size: 8rem
+        display: flex
+        position: relative
+        color: rgba($primary,0.85)
+        span            
+            transform: scale(0)
+            perspective: 500px
+            animation: grow 0.3s forwards cubic-bezier(.99,.62,.51,1.29)
+            margin: 0 8px
+            @for $i from 1 through 6
+                &:nth-of-type(#{$i})
+                    animation-delay: $i * 0.15s
+        &::before,&::after
+            content: ''
+            position: absolute
+            width: 0
+            height: 0.4rem
+            animation: draw-line 0.3s forwards ease-in 1.5s
+            background: rgba($primary,0.85)
+        &::before
+            top: 0
+            left: 0
+        &::after
+            bottom: 0
+            right: 0
+            
+@keyframes grow
+    0%
+        transform: scale(0)
+    80%
+        transform: scale(1.2)
+    85%
+        transform: scale(0.9)
+    90%
+        transform: scale(1.1)
+    95%
+        transform: scale(0.95)
+    100%
+        transform: scale(1)
+@keyframes draw-line
+    to
+        width: 100%
+@keyframes show-image
+    to
+        opacity: 1
+@keyframes 
+
+@media (max-width: 600px)
+    .container
+        h3
+            font-size: 5rem
+
+
+    
