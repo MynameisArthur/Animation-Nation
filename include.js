@@ -1328,6 +1328,13 @@ let cards = [{
 		author: "DhevaMargaPutra",
 		githubLink: "https://github.com/DhevaMargaPutra"
 	},
+	{
+		artName: "Night Landscape Animation",
+		pageLink: "./Art/MynameisArthur/index.html",
+		imageLink: "./Art/MynameisArthur/Night-Landscape-Animation.gif",
+		author: "Artur Domański",
+		githubLink: "https://github.com/MynameisArthur"
+	  },
 ];
 
 // +--------------------------------------------------------------------------------+
